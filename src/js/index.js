@@ -4,42 +4,48 @@ const allCards = document.querySelectorAll('.card');
 let firstChoice;
 let secondChoice;
 
-const flipCard = card => {
-  console.log('CARD---', card);
-  card.classList.toggle('card--show');
+const addShow = card => {
+  card.classList.add('card--show');
+};
+
+const removeShow = card => {
+  card.classList.remove('card--show');
 };
 
 const checkCards = () => {
-  console.log(firstChoice.dataset.pokemon === secondChoice.dataset.pokemon);
   if (firstChoice.dataset.pokemon !== secondChoice.dataset.pokemon) {
-    flipCard(firstChoice);
-    flipCard(secondChoice);
+    removeShow(firstChoice);
+    removeShow(secondChoice);
   }
   firstChoice = undefined;
   secondChoice = undefined;
 };
 
 const asignChoice = card => {
-  console.log(card.dataset.selected);
   if (card.dataset.selected) return;
-  card.dataset.selected = true;
   firstChoice ? (secondChoice = card) : (firstChoice = card);
-  flipCard(firstChoice);
-  if (firstChoice && secondChoice) checkCards();
+  addShow(card);
+
+  card.addEventListener(
+    'transitionend',
+    () => {
+      if (firstChoice && secondChoice) checkCards();
+    },
+    { once: true }
+  );
 };
 
 document.addEventListener('click', ev => {
-  if (!ev.target.classList.contains('card')) return;
-  asignChoice(ev.target);
+  if (ev.target.classList.contains('card')) asignChoice(ev.target);
 });
 
 window.addEventListener('load', () => {
   allCards.forEach(card => {
-    flipCard(card);
+    addShow(card);
   });
   const timeoutId = setTimeout(() => {
     allCards.forEach(card => {
-      flipCard(card);
+      removeShow(card);
     });
     clearTimeout(timeoutId);
   }, 1000);
