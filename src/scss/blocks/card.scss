@@ -1,0 +1,62 @@
+@use '../mixins/pseudo.scss' as *;
+
+.card {
+    position: relative;
+    width: 300px;
+    height: 350px;
+    background-color: gray;
+    border-radius: 8px;
+  
+    transform-style: preserve-3d;
+    transition: transform 500ms ease-in-out;
+  }
+  
+  .card__front,
+  .card__back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .card__front {
+    background-color: lightsalmon;
+    transform: rotateY(180deg);
+    z-index: -1; /* Para Firefox */
+  }
+  
+  .card__back {
+    border: 6px solid black;
+    background-image: linear-gradient(50deg, rgba(0, 0, 0, 0.1) 50%, transparent 50%), linear-gradient(red 49%, black 49% 51%, white 51%);
+    backface-visibility: hidden;
+    transform: translateZ(0); /* Para Firefox */
+    
+}
+
+.card__front, .card__back, .card__image {
+    pointer-events: none;
+    
+  }
+
+  .card__back::after {
+    @include pseudo(100px, 100px) {
+        content: '?';
+        background-color: lightyellow;
+        border-radius: 50%;
+        border: 6px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 5rem;
+    }
+  }
+  
+  .card--show {
+    transform: rotateY(180deg);
+  }
+  
