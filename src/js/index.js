@@ -16,6 +16,9 @@ const checkCards = () => {
   if (firstChoice.dataset.pokemon !== secondChoice.dataset.pokemon) {
     removeShow(firstChoice);
     removeShow(secondChoice);
+  } else {
+    firstChoice.dataset.correct = true;
+    secondChoice.dataset.correct = true;
   }
   firstChoice = undefined;
   secondChoice = undefined;
@@ -36,7 +39,7 @@ const asignChoice = card => {
 };
 
 document.addEventListener('click', ev => {
-  if (ev.target.classList.contains('card')) asignChoice(ev.target);
+  if (ev.target.classList.contains('card') && !ev.target.dataset.correct) asignChoice(ev.target);
 });
 
 window.addEventListener('load', () => {
@@ -48,5 +51,5 @@ window.addEventListener('load', () => {
       removeShow(card);
     });
     clearTimeout(timeoutId);
-  }, 1000);
+  }, 3000);
 });
