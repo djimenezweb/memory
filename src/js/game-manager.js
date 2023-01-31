@@ -1,5 +1,9 @@
+const total = document.getElementById('total');
+const fails = document.getElementById('fails');
 let firstChoice;
 let secondChoice;
+let totalCounter = 0;
+let failsCounter = 0;
 
 const addShow = card => {
   card.classList.add('card--show');
@@ -26,9 +30,13 @@ const checkCards = () => {
   if (firstChoice.dataset.pokemon !== secondChoice.dataset.pokemon) {
     removeShow(firstChoice);
     removeShow(secondChoice);
+    failsCounter++;
+    fails.textContent = failsCounter;
   } else {
     firstChoice.dataset.correct = true;
     secondChoice.dataset.correct = true;
+    totalCounter++;
+    total.textContent = totalCounter;
   }
   firstChoice = undefined;
   secondChoice = undefined;
