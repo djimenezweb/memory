@@ -1,6 +1,6 @@
 import { fillArray, shuffle } from './randomizer';
 
-const allCards = fillArray(150, 8);
+const allCards = fillArray(150, 6);
 const shuffledCards = shuffle(allCards);
 
 export const createBoard = () => {
